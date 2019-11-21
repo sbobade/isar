@@ -459,6 +459,16 @@ def main(argv):
                 hlpt[0](hlpt[1], hlpt[2])
             return 0
 
+    # validate wic cp src and dest parameter to identify which one of it is
+    # image and cast it into imgtype
+    if args.command == "cp":
+        if ":" in args.dest:
+            args.dest = imgtype(args.dest)
+        elif ":" in args.src:
+            args.src = imgtype(args.src)
+        else:
+            raise argparse.ArgumentTypeError("no image or partition number specified.")
+
     return hlp.invoke_subcommand(args, parser, hlp.wic_help_usage, subcommands)
 
 
